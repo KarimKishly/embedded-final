@@ -1,5 +1,5 @@
 from camera import takePicture, take_picture_from_camera
-from ultrasonic import get_distance
+from ultrasonic_process import get_distance
 from color_detection import find_zone
 import serial
 import time
@@ -22,12 +22,7 @@ def get_command():
     if distance < 3.0:
         command = STOP
     else:
-        # zone = find_zone(
-        #     image=picture_dir,
-        #     color='red'
-        # )
         zone = detect_red_objects("resources/captured_img.jpg")
-        print(zone)
         if zone == 1 or zone == 4 or zone == 7:
             command = ROTATE_LEFT
         elif zone == 2 or zone == 5 or zone == 8:
@@ -44,6 +39,5 @@ def send_command(command: int):
     return
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    while True:
         command = get_command()
         #print(command)

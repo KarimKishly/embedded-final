@@ -33,7 +33,7 @@ def take_picture_from_camera():
     # Release the camera
     cap.release()
 
-    print("Picture taken successfully")
+    #print("Picture taken successfully")
 
 # Call the function to take a picture
 

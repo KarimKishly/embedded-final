@@ -60,10 +60,8 @@ def detect_red_objects(image_path):
 
     # Print the zone with the most red
     if max_red_zone is not None:
-        print(f"Zone {max_red_zone[0]*3 + max_red_zone[1] + 1} has the most red.")
+        print(f"{max_red_zone[0]*3 + max_red_zone[1] + 1}")
         return max_red_zone[0] * 3 + max_red_zone[1] + 1
     else:
         print("No red objects detected.")
         return -1
-# Call the function to detect red objects and determine the zone with the most red
-detect_red_objects("resources/captured_img.jpg")
