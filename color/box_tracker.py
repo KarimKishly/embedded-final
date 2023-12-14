@@ -1,20 +1,28 @@
+from color.Color import Color
 import cv2
 import numpy as np
 from camera import take_picture_from_camera
 
-def detect_blue_box():
+def detect_box_center(color: Color) -> int:
     # Read the image
     image = cv2.imread(take_picture_from_camera())
 
     # Convert the image to the HSV color space
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-    # Define the lower and upper ranges for the blue color
-    lower_blue = np.array([90, 50, 50])
-    upper_blue = np.array([130, 255, 255])
+    # Define the lower and upper ranges for the red color
+    if color == Color.RED:
+        lower_color_bound = np.array([0, 50, 50])
+        upper_color_bound = np.array([10, 255, 255])
+    if color == Color.GREEN:
+        lower_color_bound = np.array([40, 50, 50])
+        upper_color_bound = np.array([80, 255, 255])
+    if color == Color.BLUE:
+        lower_color_bound = np.array([90, 50, 50])
+        upper_color_bound = np.array([130, 255, 255])
 
-    # Threshold the image to get only the blue color
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # Threshold the image to get only the desired color
+    mask = cv2.inRange(hsv, lower_color_bound, upper_color_bound)
 
     # Find contours in the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -34,12 +42,14 @@ def detect_blue_box():
 
         # Draw a bounding box around the largest contour
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-        return x
-        # Display the image with the bounding box
-        #cv2.imshow("Largest Blue Object", image)
+        #cv2.imshow("Largest Desired Color Object", image)
         #cv2.waitKey(0)
         #cv2.destroyAllWindows()
+        return x
+
     else:
-        print("No blue object found in the image.")
+        print("No desired object found in the image.")
         return -1
+
+if __name__ == '__main__':
+    detect_box_center(Color.RED)

@@ -1,27 +1,36 @@
-from red_box import detect_red_box
-from blue_box import detect_blue_box
-from green_box import detect_green_box
+from color.box_tracker import detect_box_center
+from color.Color import Color
+import random
 
-NO_MOVEMENT = -1
-FORWARD = 0
-LEFT = 1
-RIGHT = 2
+NO_MOVEMENT = 255
+FORWARD = 1
+LEFT = 2
+RIGHT = 3
 
-def move():
-    movement = NO_MOVEMENT
-    x = detect_red_box()
-    if x != -1:
-        if x > 250:
+def track_red_box():
+    x_center = detect_box_center(Color.RED)
+    print(x_center)
+    if x_center != -1:
+        # if center of box > center of image + 10 pixels
+        if x_center > 250: # tune this number as you see fit
             movement = LEFT
-        elif x < 230:
+        # if center of box < center of image - 10 pixels
+        elif x_center < 230: # tune this number as you see fit
             movement = RIGHT
         else:
             movement = FORWARD
     else:
-        movement = NO_MOVEMENT
+        # if box not found, rotate in a random direction until box is found
+        movement = random.choice([LEFT, RIGHT])
     return movement
 
 if __name__ == '__main__':
     while True:
-        print(move())
+        x = track_red_box()
+        if x == FORWARD:
+            print("FORWARD")
+        if x == LEFT:
+            print("LEFT")
+        if x == RIGHT:
+            print("RIGHT")
 

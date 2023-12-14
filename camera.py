@@ -28,13 +28,14 @@ def take_picture_from_camera():
         return
 
     # Save the captured frame as an image
-    cv2.imwrite("resources/captured_img.jpg", frame)
+    cv2.imwrite("C:/Projects/embedded-final/resources/captured_img.jpg", frame)
 
     # Release the camera
     cap.release()
 
+    return "C:/Projects/embedded-final/resources/captured_img.jpg"
     #print("Picture taken successfully")
 
 # Call the function to take a picture
-
-take_picture_from_camera()
+if __name__ == '__main__':
+    take_picture_from_camera()
