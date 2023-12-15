@@ -60,7 +60,7 @@ if __name__ == '__main__':
                 distance = 15
                 
                 if distance > 10.0:
-                    action = track_object(Color.GREEN)
+                    action = track_object(Color.RED)
                     send_command(action)
                 else:
                     state = LIFT_FORK

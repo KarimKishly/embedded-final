@@ -1,5 +1,5 @@
-# from picamera import PiCamera
-# from time import sleep
+from picamera import PiCamera
+from time import sleep
 import cv2
 
 class Pc_Cam:
@@ -32,12 +32,12 @@ class Pc_Cam:
         #print("Picture taken successfully")    
 
 class Rp_Cam():
-#     def __init__(self):
-#         cam = PiCamera()
-#         cam.start_preview(alpha=192)
+    def __init__(self):
+        self.cam = PiCamera()
+        self.cam.start_preview(alpha=192)
         
     def take_picture_from_camera(self):
-        dir = "/home/admin/Desktop/pic.jpg"
+        dir = "./captured_images/pic.jpg"
         # sleep(1)
         self.cam.capture(dir)
         return dir

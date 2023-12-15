@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from camera import Pc_Cam, Rp_Cam
 
-cam = Pc_Cam()
+cam = Rp_Cam()
 
 def detect_object(color: Color, img_index:int=None) -> int:
     # Read the image
