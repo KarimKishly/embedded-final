@@ -1,4 +1,4 @@
-from picamera import PiCamera
+from picamera import PiCamera, array
 from time import sleep
 import cv2
 
@@ -34,13 +34,11 @@ class Pc_Cam:
 class Rp_Cam():
     def __init__(self):
         self.cam = PiCamera()
-        self.cam.start_preview(alpha=192)
-        
+        self.cam.resolution = (640, 480)
+        self.cam.framerate = 32
+                
     def take_picture_from_camera(self):
-        dir = "./captured_images/pic.jpg"
-        # sleep(1)
-        self.cam.capture(dir)
-        return dir
+        return array.PiRGBArray(self.cam, size=(640, 480))
 
 # Call the function to take a picture
 if __name__ == '__main__':
