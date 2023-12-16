@@ -1,15 +1,16 @@
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import serial
-from object_logic.object_tracking import track_object
+from object_logic.high_level_functions import HighLevelCommands as hlc
 from object_logic.Color import Color
-from ultrasonic.ultrasonic_processbuilder import read_sensor
+from ultrasonic.ultrasonic_process import get_distance
+
 
 # States
-DETECT_RED = 0
-LIFT_FORK = 1
-LOCATE_BLACK_AREA = 2
+DETECT_BLUE = 0
+LOWER_FORK = 1
+LIFT_FORK = 2
+LOCATE_BLACK_AREA = 3
 
 
 global paused
@@ -38,38 +39,43 @@ def run_server():
     print('Server running on {}:{}'.format(*SERVER_ADDRESS))
     httpd.serve_forever()
 
-def send_command(command: int):
-    # ser = serial.Serial('/dev/serial0', 9600)   #TODO uncomment
-    # ser.write(bytes[command])
-    print(command)
-    return
+
 
 if __name__ == '__main__':
     # localhost:8080/pause and localhost:8080/resume using server
-    server_thread = threading.Thread(target=run_server)
-    server_thread.start()
-    state = DETECT_RED
+    # server_thread = threading.Thread(target=run_server)
+    # server_thread.start()
+    state = DETECT_BLUE
     counter = 0
+    distance = 10000
+    
     while True:
-        time.sleep(0.5)
+        hlc.stand_by()
         counter += 1
         print("Start of Iteration:", counter)
         if not paused:
-            if state == DETECT_RED:
-                # distance = read_sensor()    #TODO uncomment
-                distance = 15
+            if state == DETECT_BLUE:
                 
-                if distance > 10.0:
-                    action = track_object(Color.RED)
-                    send_command(action)
+                if counter == 3:
+                    distance = get_distance()
+                    counter = 0
+                
+                if distance > 50.0:
+                    hlc.track_object(Color.BLUE)
                 else:
-                    state = LIFT_FORK
+                    state = LOWER_FORK
+
+            if state == LOWER_FORK:
+
+                hlc.prepare_to_lift()
+                state = LIFT_FORK
 
             if state == LIFT_FORK:
-                send_command(LIFT_UP)
-                time.sleep(1.5)
-                send_command(STOP_LIFT)
+
+                hlc.lift_fork()
                 state = LOCATE_BLACK_AREA
 
+
             if state == LOCATE_BLACK_AREA:
-                track_object(Color.BLACK)
+                # track_object(Color.BLACK)
+                pass

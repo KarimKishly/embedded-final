@@ -46,12 +46,16 @@ def detect_object(color: Color, img_index:int=None) -> int:
         box = cv2.boxPoints(rect)
         box = np.intp(box)
         cv2.drawContours(image,[box],0,(0,0,255),2)
+        M = cv2.moments(box)
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+        center = (cX, cY)
         
-        
-        cv2.imshow("Largest Desired Color Object", image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        return rect.center
+        cv2.imwrite('./captured_images/Result2.jpg',image)
+        # cv2.imwrite("Largest Desired Color Object", image)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+        return center
     except:
         print("No desired object found in the image.")
         return -1
