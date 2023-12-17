@@ -74,7 +74,7 @@ def test_image(color, img_index, img_type):
 
 
 def detect_notch_line(hsv, frame, og_mask, og_res, box_center, box_area):
-    mask = cv2.inRange(hsv, np.array([0, 0, 0]), np.array([180, 255, 11]))
+    mask = cv2.inRange(hsv, np.array([0, 0, 0]), np.array([180, 240, 50]))
     res = cv2.bitwise_and(frame,frame, mask= mask)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     filtered_contours = [cnt for cnt in contours if (cv2.contourArea(cnt) > 100 and 10 < (box_area / cv2.contourArea(cnt)) < 100)]
@@ -111,12 +111,17 @@ def detect_notch_line(hsv, frame, og_mask, og_res, box_center, box_area):
         return res, mask, None
 
 if __name__ == "__main__":
-    brk = True
-    while(brk):
-        # time.sleep(1)
-        # brk = test_image(RED, img_index=6, img_type="jpg", cap=cap)
-        brk = test_image(GREEN, 0, "")
+    # brk = True
+    # while(brk):
+    #     # time.sleep(1)
+    #     # brk = test_image(RED, img_index=6, img_type="jpg", cap=cap)
+    #     brk = test_image(GREEN, 0, "")
         
-        # send_image_basic()
-    cv2.destroyAllWindows()
-    # cap.release()
+    #     # send_image_basic()
+    # cv2.destroyAllWindows()
+    # # cap.release()
+    
+    from object_logic.object_detection import detect_object
+    from object_logic.Color import Color
+    print(detect_object(Color.RED))
+
