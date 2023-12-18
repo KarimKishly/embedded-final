@@ -123,8 +123,8 @@ class HighLevelCommands():
         HighLevelCommands.stand_by()
         
     @staticmethod
-    def detect_blue_box(is_left):
-        data = detect_object(Color.BLUE)
+    def detect_box_to_stack(is_left, color: Color):
+        data = detect_object(color)
         print("data is:" , data)
         while data == (-1, -1, -1):
             if is_left == 0:
@@ -132,6 +132,6 @@ class HighLevelCommands():
             elif is_left == 1:
                 HighLevelCommands.move_right(20)
             HighLevelCommands.stand_by()
-            data = detect_object(Color.BLUE)
+            data = detect_object(color)
             print("data is:" , data)
         

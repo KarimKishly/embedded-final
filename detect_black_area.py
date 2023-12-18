@@ -19,15 +19,7 @@ def detect_black_area():
     
     hlc.move_forward(2)
     
-def detect_blue_box():
-    data = detect_object(Color.BLUE)
-    print("data is:" , data)
-    while data == (-1, -1, -1):
-        hlc.move_left(4)
-        hlc.stand_by()
-        data = detect_object(Color.BLUE)
-        print("data is:" , data)
-    
+
     
     
 
