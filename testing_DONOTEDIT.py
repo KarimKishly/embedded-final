@@ -29,7 +29,7 @@ def test_image(color, img_index, img_type):
         if color == GREEN:
             mask = cv2.inRange(hsv, np.array([30, 100, 20]), np.array([70, 255, 255]))
         if color == BLUE:
-            mask = cv2.inRange(hsv, np.array([80, 100, 20]), np.array([115, 255, 255]))
+            mask = cv2.inRange(hsv, np.array([90, 100, 20]), np.array([115, 255, 255]))
         res = cv2.bitwise_and(frame,frame, mask= mask)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         filtered_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 4500]

@@ -36,6 +36,7 @@ class Rp_Cam():
         self.cam = PiCamera()
         self.cam.resolution = (640, 480)
         self.cam.framerate = 32
+        self.cam.brightness = 47
                 
     def take_picture_from_camera(self):
         return array.PiRGBArray(self.cam, size=(640, 480))

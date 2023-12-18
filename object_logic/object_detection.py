@@ -28,11 +28,11 @@ def detect_object(color: Color, min_area=None, max_area=None, img_index:int=None
             mask2 = cv2.inRange(hsv, np.array([160, 100, 20]), np.array([190, 255, 255]))
             mask = cv2.bitwise_xor(mask1, mask2)
         if color == Color.GREEN:
-            mask = cv2.inRange(hsv, np.array([30, 100, 20]), np.array([70, 255, 255]))
+            mask = cv2.inRange(hsv, np.array([30, 100, 10]), np.array([80, 255, 255]))
         if color == Color.BLUE:
             mask = cv2.inRange(hsv, np.array([80, 100, 20]), np.array([115, 255, 255]))
         if color == Color.BLACK:
-                mask = cv2.inRange(hsv, np.array([50, 0, 0]), np.array([180, 260, 50]))
+                mask = cv2.inRange(hsv, np.array([0, 0, 0]), np.array([10, 255, 30]))
                 #### Pixelation
                 height, width = mask.shape[:2]
                 w, h = (64, 64)
@@ -74,5 +74,5 @@ def detect_object(color: Color, min_area=None, max_area=None, img_index:int=None
 
 
 if __name__ == '__main__':
-    detect_object(Color.RED)
+    detect_object(Color.BLUE)
 
